@@ -20,6 +20,32 @@
             justify-content: flex-start;
             min-height: 100vh;
             padding: 40px 20px;
+            position: relative;
+        }
+
+        /* Background doodles (large, subtle white outlines) */
+        .background-doodles {
+            position: fixed;
+            inset: 0;                 /* cover the entire viewport */
+            z-index: -1;              /* sit behind page content */
+            pointer-events: none;     /* clicks pass through */
+            overflow: hidden;
+            --doodle-clip-top: 140px; /* leave blank header area */
+            clip-path: inset(var(--doodle-clip-top) 0 0 0);
+        }
+
+        .background-doodles svg {
+            width: 100%;
+            height: 100%;
+            display: block;
+        }
+
+        .background-doodles svg g {
+            stroke: rgba(255,255,255,0.12); /* subtle background strokes */
+            stroke-width: 3;
+            fill: none;
+            stroke-linecap: round;
+            stroke-linejoin: round;
         }
 
         /* ===== HEADING STYLES ===== */
@@ -38,6 +64,9 @@
             text-align: center;
             letter-spacing: 2px;
             paint-order: stroke fill;
+            position: relative; /* keep above background doodles */
+            z-index: 2;
+            background-clip: padding-box;
         }
 
         /* ===== ATTRIBUTION BOX STYLES ===== */
@@ -251,6 +280,57 @@
     </style>
 </head>
 <body>
+    <!-- LARGE BACKGROUND DOODLES (same motifs as table overlay) -->
+    <div class="background-doodles" aria-hidden="true">
+        <svg viewBox="0 0 1200 800" xmlns="http://www.w3.org/2000/svg" role="presentation" aria-hidden="true">
+            <g>
+                <!-- repeat motifs across a wider canvas -->
+                <!-- Book / notebook -->
+                <path d="M28 120 h110 v70 h-110 z" />
+                <path d="M28 120 q55 -20 110 0" />
+
+                <!-- Pencil -->
+                <path d="M170 110 l60 60" />
+                <path d="M216 156 l10 10" />
+                <path d="M232 172 l16 6" />
+
+                <!-- Robot head -->
+                <rect x="320" y="108" width="72" height="64" rx="8" />
+                <circle cx="346" cy="140" r="6" />
+                <circle cx="374" cy="140" r="6" />
+                <path d="M346 172 h28" />
+
+                <!-- Atom / AI orbit -->
+                <ellipse cx="520" cy="140" rx="36" ry="22" />
+                <ellipse cx="520" cy="140" rx="22" ry="36" transform="rotate(45 520 140)"/>
+                <circle cx="520" cy="140" r="4" />
+
+                <!-- Neural node / network -->
+                <circle cx="660" cy="130" r="6" />
+                <circle cx="700" cy="120" r="6" />
+                <circle cx="740" cy="138" r="6" />
+                <path d="M660 130 l40 -10 l40 18" />
+
+                <!-- Lightbulb with circuit lines -->
+                <path d="M880 116 q-18 0 -30 20 q-12 20 0 40 q12 20 30 20 q18 0 30 -20 q12 -20 0 -40 q-12 -20 -30 -20 z" />
+                <rect x="860" y="196" width="40" height="8" rx="2" />
+
+                <!-- Ruler / straightedge -->
+                <path d="M980 128 h140 v10 h-140 z" />
+
+                <!-- variations farther down -->
+                <path d="M60 360 h110 v70 h-110 z" />
+                <path d="M420 360 l60 60" />
+                <rect x="620" y="340" width="72" height="64" rx="8" />
+                <ellipse cx="920" cy="420" rx="36" ry="22" />
+
+                <!-- small accents -->
+                <path d="M1150 100 l6 12 l-12 -6 l12 -6 z" />
+                <path d="M1120 180 l4 8 l-8 -4 l8 -4 z" />
+            </g>
+        </svg>
+    </div>
+
     <!-- HEADING SECTION -->
     <h1 class="heading">KV REWARI AI STUDY MATERIAL</h1>
     
