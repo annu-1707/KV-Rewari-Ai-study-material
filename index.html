@@ -20,32 +20,6 @@
             justify-content: flex-start;
             min-height: 100vh;
             padding: 40px 20px;
-            position: relative;
-        }
-
-        /* Background doodles (large, subtle white outlines) */
-        .background-doodles {
-            position: fixed;
-            inset: 0;                 /* cover the entire viewport */
-            z-index: -1;              /* sit behind page content */
-            pointer-events: none;     /* clicks pass through */
-            overflow: hidden;
-            --doodle-clip-top: 140px; /* leave blank header area */
-            clip-path: inset(var(--doodle-clip-top) 0 0 0);
-        }
-
-        .background-doodles svg {
-            width: 100%;
-            height: 100%;
-            display: block;
-        }
-
-        .background-doodles svg g {
-            stroke: rgba(255,255,255,0.12); /* subtle background strokes */
-            stroke-width: 3;
-            fill: none;
-            stroke-linecap: round;
-            stroke-linejoin: round;
         }
 
         /* ===== HEADING STYLES ===== */
@@ -64,9 +38,6 @@
             text-align: center;
             letter-spacing: 2px;
             paint-order: stroke fill;
-            position: relative; /* keep above background doodles */
-            z-index: 2;
-            background-clip: padding-box;
         }
 
         /* ===== ATTRIBUTION BOX STYLES ===== */
@@ -101,50 +72,17 @@
             max-width: 1200px;
             overflow-x: auto;
             margin-top: 30px;
-            position: relative; /* anchor for absolute doodles */
-            /* allow doodles to blend inside the container without being clipped */
-            overflow-y: visible;
         }
 
-        /* Doodles overlay (white outlined school/AI motifs) - blended and subtle */
-        .table-container .doodles {
-            position: absolute;
-            top: 0;            /* start where the table starts */
-            left: 0;
-            width: 100%;
-            height: 220px;    /* adjust to control vertical spread of doodles */
-            pointer-events: none; /* let clicks go through to table */
-            z-index: 2;        /* visually above so blend mode affects table pixels */
-            overflow: visible;
-            opacity: 0.35;    /* make doodles subtle */
-            mix-blend-mode: soft-light; /* blend the white strokes with table background */
-        }
-
-        .table-container .doodles svg {
-            width: 100%;
-            height: 100%;
-            display: block;
-            stroke-opacity: 0.95;
-        }
-
-        /* Ensure table sits above base layers but allow blended doodles to interact visually. */
+        /* ===== TABLE STYLES ===== */
         .data-table {
             width: 100%;
             border-collapse: collapse;
-            position: relative;
-            z-index: 1;
-            background: transparent; /* allow doodles to show through if desired */
-        }
-
-        /* Make header slightly translucent so blended doodles are visible behind/through it */
-        .data-table thead,
-        .data-table thead th {
-            background-color: rgba(10,10,10,0.6);
         }
 
         /* ===== TABLE HEADER ROW ===== */
         .data-table thead {
-            /* background-color: #0a0a0a; moved to translucent rule above */
+            background-color: #0a0a0a;
         }
 
         .data-table thead tr {
@@ -233,12 +171,6 @@
                 padding: 10px;
                 font-size: 0.8rem;
             }
-
-            .table-container .doodles {
-                height: 160px; /* reduce doodle height on smaller screens */
-                opacity: 0.30;
-                mix-blend-mode: soft-light;
-            }
         }
 
         @media (max-width: 480px) {
@@ -270,67 +202,10 @@
                 padding: 8px;
                 font-size: 0.7rem;
             }
-
-            .table-container .doodles {
-                height: 120px; /* further reduce doodle height on very small screens */
-                opacity: 0.28;
-                mix-blend-mode: soft-light;
-            }
         }
     </style>
 </head>
 <body>
-    <!-- LARGE BACKGROUND DOODLES (same motifs as table overlay) -->
-    <div class="background-doodles" aria-hidden="true">
-        <svg viewBox="0 0 1200 800" xmlns="http://www.w3.org/2000/svg" role="presentation" aria-hidden="true">
-            <g>
-                <!-- repeat motifs across a wider canvas -->
-                <!-- Book / notebook -->
-                <path d="M28 120 h110 v70 h-110 z" />
-                <path d="M28 120 q55 -20 110 0" />
-
-                <!-- Pencil -->
-                <path d="M170 110 l60 60" />
-                <path d="M216 156 l10 10" />
-                <path d="M232 172 l16 6" />
-
-                <!-- Robot head -->
-                <rect x="320" y="108" width="72" height="64" rx="8" />
-                <circle cx="346" cy="140" r="6" />
-                <circle cx="374" cy="140" r="6" />
-                <path d="M346 172 h28" />
-
-                <!-- Atom / AI orbit -->
-                <ellipse cx="520" cy="140" rx="36" ry="22" />
-                <ellipse cx="520" cy="140" rx="22" ry="36" transform="rotate(45 520 140)"/>
-                <circle cx="520" cy="140" r="4" />
-
-                <!-- Neural node / network -->
-                <circle cx="660" cy="130" r="6" />
-                <circle cx="700" cy="120" r="6" />
-                <circle cx="740" cy="138" r="6" />
-                <path d="M660 130 l40 -10 l40 18" />
-
-                <!-- Lightbulb with circuit lines -->
-                <path d="M880 116 q-18 0 -30 20 q-12 20 0 40 q12 20 30 20 q18 0 30 -20 q12 -20 0 -40 q-12 -20 -30 -20 z" />
-                <rect x="860" y="196" width="40" height="8" rx="2" />
-
-                <!-- Ruler / straightedge -->
-                <path d="M980 128 h140 v10 h-140 z" />
-
-                <!-- variations farther down -->
-                <path d="M60 360 h110 v70 h-110 z" />
-                <path d="M420 360 l60 60" />
-                <rect x="620" y="340" width="72" height="64" rx="8" />
-                <ellipse cx="920" cy="420" rx="36" ry="22" />
-
-                <!-- small accents -->
-                <path d="M1150 100 l6 12 l-12 -6 l12 -6 z" />
-                <path d="M1120 180 l4 8 l-8 -4 l8 -4 z" />
-            </g>
-        </svg>
-    </div>
-
     <!-- HEADING SECTION -->
     <h1 class="heading">KV REWARI AI STUDY MATERIAL</h1>
     
@@ -342,58 +217,6 @@
 
     <!-- TABLE CONTAINER WITH GLOWING BORDER -->
     <div class="table-container">
-        <!-- WHITE OUTLINED DOODLES STARTING AT TABLE TOP -->
-        <div class="doodles" aria-hidden="true">
-            <svg viewBox="0 0 1200 220" xmlns="http://www.w3.org/2000/svg" role="presentation" aria-hidden="true">
-                <g stroke="white" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                    <!-- Book / notebook -->
-                    <path d="M28 40 h110 v70 h-110 z" />
-                    <path d="M28 40 q55 -20 110 0" />
-
-                    <!-- Pencil -->
-                    <path d="M170 30 l60 60" />
-                    <path d="M216 76 l10 10" />
-                    <path d="M232 92 l16 6" />
-
-                    <!-- Robot head -->
-                    <rect x="320" y="28" width="72" height="64" rx="8" />
-                    <circle cx="346" cy="60" r="6" />
-                    <circle cx="374" cy="60" r="6" />
-                    <path d="M346 92 h28" />
-                    <path d="M384 44 l12 -12" />
-                    <circle cx="398" cy="30" r="4" />
-
-                    <!-- Atom / AI orbit -->
-                    <ellipse cx="520" cy="60" rx="36" ry="22" />
-                    <ellipse cx="520" cy="60" rx="22" ry="36" transform="rotate(45 520 60)"/>
-                    <circle cx="520" cy="60" r="4" />
-
-                    <!-- Neural node / network -->
-                    <circle cx="660" cy="50" r="6" />
-                    <circle cx="700" cy="40" r="6" />
-                    <circle cx="740" cy="58" r="6" />
-                    <path d="M660 50 l40 -10 l40 18" />
-                    <path d="M700 40 l-20 38" />
-
-                    <!-- Lightbulb with circuit lines -->
-                    <path d="M880 36 q-18 0 -30 20 q-12 20 0 40 q12 20 30 20 q18 0 30 -20 q12 -20 0 -40 q-12 -20 -30 -20 z" />
-                    <rect x="860" y="116" width="40" height="8" rx="2" />
-                    <path d="M870 124 v12" />
-
-                    <!-- Ruler / straightedge -->
-                    <path d="M980 48 h140 v10 h-140 z" />
-                    <path d="M990 52 v6" />
-                    <path d="M1010 52 v6" />
-                    <path d="M1030 52 v6" />
-                    <path d="M1050 52 v6" />
-
-                    <!-- Small stars / accents -->
-                    <path d="M1150 28 l6 12 l-12 -6 l12 -6 z" />
-                    <path d="M1120 80 l4 8 l-8 -4 l8 -4 z" />
-                </g>
-            </svg>
-        </div>
-
         <!-- DATA TABLE -->
         <!-- 
             INSTRUCTIONS TO ADD/MODIFY ROWS:
