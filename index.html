@@ -73,9 +73,11 @@
             overflow-x: auto;
             margin-top: 30px;
             position: relative; /* anchor for absolute doodles */
+            /* allow doodles to blend inside the container without being clipped */
+            overflow-y: visible;
         }
 
-        /* Doodles overlay (white outlined school/AI motifs) */
+        /* Doodles overlay (white outlined school/AI motifs) - blended and subtle */
         .table-container .doodles {
             position: absolute;
             top: 0;            /* start where the table starts */
@@ -83,17 +85,20 @@
             width: 100%;
             height: 220px;    /* adjust to control vertical spread of doodles */
             pointer-events: none; /* let clicks go through to table */
-            z-index: 0;        /* behind the table rows */
+            z-index: 2;        /* visually above so blend mode affects table pixels */
             overflow: visible;
+            opacity: 0.35;    /* make doodles subtle */
+            mix-blend-mode: soft-light; /* blend the white strokes with table background */
         }
 
         .table-container .doodles svg {
             width: 100%;
             height: 100%;
             display: block;
+            stroke-opacity: 0.95;
         }
 
-        /* Ensure table sits above doodles */
+        /* Ensure table sits above base layers but allow blended doodles to interact visually. */
         .data-table {
             width: 100%;
             border-collapse: collapse;
@@ -102,9 +107,15 @@
             background: transparent; /* allow doodles to show through if desired */
         }
 
+        /* Make header slightly translucent so blended doodles are visible behind/through it */
+        .data-table thead,
+        .data-table thead th {
+            background-color: rgba(10,10,10,0.6);
+        }
+
         /* ===== TABLE HEADER ROW ===== */
         .data-table thead {
-            background-color: #0a0a0a;
+            /* background-color: #0a0a0a; moved to translucent rule above */
         }
 
         .data-table thead tr {
@@ -196,6 +207,8 @@
 
             .table-container .doodles {
                 height: 160px; /* reduce doodle height on smaller screens */
+                opacity: 0.30;
+                mix-blend-mode: soft-light;
             }
         }
 
@@ -231,6 +244,8 @@
 
             .table-container .doodles {
                 height: 120px; /* further reduce doodle height on very small screens */
+                opacity: 0.28;
+                mix-blend-mode: soft-light;
             }
         }
     </style>
