@@ -75,7 +75,7 @@
         .audio-controls {
             display: flex;
             gap: 10px;
-            margin-bottom: 15px;
+            margin-bottom: 50px;
             align-items: center;
             justify-content: center;
         }
@@ -97,55 +97,7 @@
         }
 
         audio {
-            width: 100%;
-            max-width: 600px;
-            height: 30px;
-            margin-bottom: 15px;
-            display: block;
-            margin-left: auto;
-            margin-right: auto;
-        }
-
-        /* ===== VISUALIZER STYLES ===== */
-        .visualizer-container {
-            display: flex;
-            align-items: flex-end;
-            justify-content: center;
-            gap: 4px;
-            height: 80px;
-            margin-bottom: 50px;
-            max-width: 600px;
-            margin-left: auto;
-            margin-right: auto;
-        }
-
-        .visualizer-bar {
-            width: 8px;
-            background: linear-gradient(to top, #0033ff, #ffffff);
-            border-radius: 4px;
-            transition: height 0.1s ease-out;
-            height: 5px;
-            filter: drop-shadow(0 0 2px #ffffff);
-        }
-
-        /* Color transition animation - white to navy blue */
-        @keyframes colorShift {
-            0% {
-                background: linear-gradient(to top, #0033ff, #ffffff);
-                filter: drop-shadow(0 0 2px #ffffff);
-            }
-            50% {
-                background: linear-gradient(to top, #0033ff, #88ccff);
-                filter: drop-shadow(0 0 2px #88ccff);
-            }
-            100% {
-                background: linear-gradient(to top, #001a4d, #1a4d99);
-                filter: drop-shadow(0 0 2px #1a4d99);
-            }
-        }
-
-        .visualizer-bar.playing {
-            animation: colorShift 3s ease-in-out infinite;
+            display: none;
         }
 
         /* ===== TABLE CONTAINER WITH GLOWING BORDER ===== */
@@ -261,20 +213,6 @@
                 padding: 10px;
                 font-size: 0.8rem;
             }
-
-            .visualizer-container {
-                gap: 2px;
-                height: 60px;
-                max-width: 90%;
-            }
-
-            .visualizer-bar {
-                width: 6px;
-            }
-
-            audio {
-                max-width: 90%;
-            }
         }
 
         @media (max-width: 480px) {
@@ -312,21 +250,6 @@
                 font-size: 0.85rem;
             }
 
-            audio {
-                height: 25px;
-                max-width: 95%;
-            }
-
-            .visualizer-container {
-                gap: 2px;
-                height: 50px;
-                max-width: 95%;
-            }
-
-            .visualizer-bar {
-                width: 5px;
-            }
-
             .player-title {
                 font-size: 0.85rem;
             }
@@ -343,16 +266,15 @@
         Web developed by Aanya Singh, Class 10 B</p>
     </div>
 
-    <!-- AUDIO PLAYER SECTION (NO BOX) -->
+    <!-- AUDIO PLAYER SECTION (SIMPLE) -->
     <div class="player-title">🎵 BACKGROUND MUSIC - Relaxing Piano & Rain</div>
     <div class="audio-controls">
         <button class="play-btn" id="playPauseBtn">▶ Play</button>
     </div>
-    <audio id="audioPlayer" controls autoplay>
+    <audio id="audioPlayer">
         <source src="audio/background-music.mp3" type="audio/mpeg">
         Your browser does not support the audio element.
     </audio>
-    <div class="visualizer-container" id="visualizer"></div>
 
     <!-- TABLE CONTAINER WITH GLOWING BORDER -->
     <div class="table-container">
@@ -522,30 +444,9 @@
      </div>
 
     <script>
-        // Audio Visualizer Script
+        // Simple Audio Player
         const audioPlayer = document.getElementById('audioPlayer');
         const playPauseBtn = document.getElementById('playPauseBtn');
-        const visualizer = document.getElementById('visualizer');
-        
-        // Create 30 visualizer bars
-        const barCount = 30;
-        for (let i = 0; i < barCount; i++) {
-            const bar = document.createElement('div');
-            bar.className = 'visualizer-bar';
-            visualizer.appendChild(bar);
-        }
-
-        const bars = document.querySelectorAll('.visualizer-bar');
-        
-        // Audio context for real-time frequency analysis
-        const audioContext = new (window.AudioContext || window.webkitAudioContext)();
-        const analyser = audioContext.createAnalyser();
-        const source = audioContext.createMediaElementAudioSource(audioPlayer);
-        source.connect(analyser);
-        analyser.connect(audioContext.destination);
-        analyser.fftSize = 256;
-        
-        const dataArray = new Uint8Array(analyser.frequencyBinCount);
 
         // Play/Pause button functionality
         playPauseBtn.addEventListener('click', () => {
@@ -557,30 +458,6 @@
                 playPauseBtn.textContent = '▶ Play';
             }
         });
-
-        // Update visualizer
-        function updateVisualizer() {
-            analyser.getByteFrequencyData(dataArray);
-            
-            bars.forEach((bar, i) => {
-                const index = Math.floor((i / barCount) * dataArray.length);
-                const value = dataArray[index];
-                const height = (value / 255) * 100;
-                bar.style.height = Math.max(5, height) + 'px';
-                
-                // Add playing class for color animation
-                if (!audioPlayer.paused) {
-                    bar.classList.add('playing');
-                } else {
-                    bar.classList.remove('playing');
-                }
-            });
-
-            requestAnimationFrame(updateVisualizer);
-        }
-
-        // Start visualizer
-        updateVisualizer();
 
         // Update button state when audio plays/pauses
         audioPlayer.addEventListener('play', () => {
