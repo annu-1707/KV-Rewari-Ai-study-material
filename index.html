@@ -269,9 +269,9 @@
     <!-- AUDIO PLAYER SECTION (SIMPLE) -->
     <div class="player-title">🎵 BACKGROUND MUSIC - Relaxing Piano & Rain</div>
     <div class="audio-controls">
-        <button class="play-btn" id="playPauseBtn">▶ Play</button>
+        <button class="play-btn" id="playPauseBtn">⏸ Pause</button>
     </div>
-    <audio id="audioPlayer">
+    <audio id="audioPlayer" autoplay loop>
         <source src="audio/background-music.mp3" type="audio/mpeg">
         Your browser does not support the audio element.
     </audio>
@@ -444,9 +444,15 @@
      </div>
 
     <script>
-        // Simple Audio Player
+        // Simple Audio Player with Autoplay
         const audioPlayer = document.getElementById('audioPlayer');
         const playPauseBtn = document.getElementById('playPauseBtn');
+
+        // Try to autoplay on page load
+        audioPlayer.play().catch(function(error) {
+            // If autoplay is blocked by browser, show play button
+            playPauseBtn.textContent = '▶ Play';
+        });
 
         // Play/Pause button functionality
         playPauseBtn.addEventListener('click', () => {
