@@ -182,6 +182,15 @@
             box-shadow: inset 0 0 5px rgba(0, 51, 255, 0.2);
         }
 
+        /* ===== EXTRA MATERIALS TABLE SPECIFIC STYLES ===== */
+        .extra-materials-table thead th:first-child {
+            width: 25%;
+        }
+
+        .extra-materials-table thead th:last-child {
+            width: 75%;
+        }
+
         /* ===== RESPONSIVE DESIGN ===== */
         @media (max-width: 768px) {
             .heading {
@@ -276,7 +285,7 @@
         Your browser does not support the audio element.
     </audio>
 
-    <!-- TABLE CONTAINER WITH GLOWING BORDER -->
+    <!-- FIRST TABLE CONTAINER WITH GLOWING BORDER -->
     <div class="table-container">
         <!-- DATA TABLE -->
         <!-- 
@@ -423,18 +432,47 @@
                     <td><a href="https://drive.google.com/file/d/1Mvtw6VdQ00QKsp4lWt5g4yuVMhRWNSLQ/view?usp=sharing">Quiz PDF</a></td>
                 </tr>
 
-                <!-- Sample Row 11 -->
-                <!-- <tr>
-                     <td></td>
-                     <td></td>
-                     <td>10 B</td>
-                     <td><a href="">Comic Strip here</a></td>
-                     <td><a href="">Quiz</a></td>
-                     <td><a href="">Mind Maps</a></td>
-                     <td><a href="">Quiz PDF</a></td>
-                 </tr> -->
+                <!-- 
+                     ADD MORE ROWS BELOW THIS LINE
+                     Follow the same structure as above
+                 -->
 
-                 <!-- 
+             </tbody>
+         </table>
+     </div>
+
+    <!-- SECOND TABLE - EXTRA MATERIALS (BELOW FIRST TABLE) -->
+    <div class="table-container">
+        <table class="data-table extra-materials-table">
+            <!-- TABLE HEADER -->
+            <thead>
+                <tr>
+                    <th>EXTRA MATERIALS</th>
+                    <th>LINK</th>
+                </tr>
+            </thead>
+
+            <!-- TABLE BODY - Add/Remove rows here as needed -->
+            <tbody>
+                <!-- Sample Row 1 -->
+                <tr>
+                    <td>Sample Material 1</td>
+                    <td><a href="#">Link here</a></td>
+                </tr>
+
+                <!-- Sample Row 2 -->
+                <tr>
+                    <td>Sample Material 2</td>
+                    <td><a href="#">Link here</a></td>
+                </tr>
+
+                <!-- Sample Row 3 -->
+                <tr>
+                    <td>Sample Material 3</td>
+                    <td><a href="#">Link here</a></td>
+                </tr>
+
+                <!-- 
                      ADD MORE ROWS BELOW THIS LINE
                      Follow the same structure as above
                  -->
